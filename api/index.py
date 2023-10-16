@@ -33,35 +33,7 @@ useable_minutes = 15 #每次付款可使用幾分鐘
 # domain root
 @app.route('/')
 def home():
-    html = '<style> table,td {  border: 1px solid #333;} thead,tfoot {  background-color: #333;  color: #fff;}</style>'
-    html = html+'<h2>aism_accounts</h2>'
-    html = html+"<table style='border: 1px solid #333;'><thead style='border: 1px solid #333;'><tr><th>no</th><th>line_id</th><th>user_name</th><th>created_on</th></tr></thead><tbody style='border: 1px solid #333;'>"    
-    conn = psycopg2.connect(conn_string) 
-    cur = conn.cursor()
-    cur.execute("select line_id,user_name,TO_CHAR(created_on, 'YYYY/MM/DD HH24:MI:SS') from aism_accounts order by created_on desc")
-    i = 1
-    for r in cur :
-        line_id=r[0]
-        user_name=r[1]
-        created_on=r[2] 
-        html = html+"<tr><td>"+str(i)+"</td><td>"+line_id+"</td><td>"+user_name+"</td><td>"+created_on+"</td></tr>"
-        i=i+1
-    html = html+"</tbody></table>"
-    
-    html = html+'<h2>aism_pay</h2>'
-    html = html+"<table style='border: 1px solid #333;'><thead style='border: 1px solid #333;'><tr><th>no</th><th>line_id</th><th>order_id</th><th>rtnmsg</th><th>created_on</th></tr></thead><tbody style='border: 1px solid #333;'>"    
-    cur.execute("select line_id,order_id,COALESCE(rtnmsg,''),TO_CHAR(created_on, 'YYYY/MM/DD HH24:MI:SS') from aism_pay order by created_on desc")
-    i = 1
-    for r in cur :
-        line_id=r[0]
-        order_id=r[1]
-        rtnmsg=r[2]
-        created_on=r[3] 
-        html = html+"<tr><td>"+str(i)+"</td><td>"+line_id+"</td><td>"+order_id+"</td><td>"+rtnmsg+"</td><td>"+created_on+"</td></tr>"
-        i=i+1
-    html = html+"</tbody></table>"
-    
-    return 'Hello, World!<br>'+html
+    return 'Hello, World!'
 
 # return_url: 綠界 Server 端回傳 (POST) 付款成功
 @app.route('/return_url', methods=['POST'])
